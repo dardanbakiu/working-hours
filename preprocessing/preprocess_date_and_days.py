@@ -18,8 +18,13 @@ def preprocess_working_days(filename):
     # Replace working days with their corresponding numbers
     df["working_day"] = df["working_day"].map(day_dict)
 
+    # Extract the month from the date
+    df["month"] = pd.to_datetime(df["date"]).dt.month
+    # Drop the original date column
+    df.drop("date", axis=1, inplace=True)
+
     # Save the preprocessed dataframe to a new CSV file
-    output_filename = "working_days_preprocessed_" + filename
+    output_filename = "preprocessed_" + filename
     df.to_csv(output_filename, index=False)
     
     print(f"Preprocessed data saved to {output_filename}")
