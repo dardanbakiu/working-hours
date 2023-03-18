@@ -1,5 +1,7 @@
 from preprocessing.preprocess_names import preprocess_employee_names
 from preprocessing.preprocess_days import preprocess_working_days
+from preprocessing.remove_date import remove_date_attribute
 
 # preprocess_employee_names("employee_working_hours.csv")
-preprocess_working_days("employee_working_hours.csv")
+# preprocess_working_days("employee_working_hours.csv")
+remove_date_attribute("working_days_preprocessed_employee_working_hours.csv")
