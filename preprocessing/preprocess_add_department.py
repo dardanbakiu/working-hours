@@ -26,12 +26,11 @@ employee_department_mapping = {
 with open('preprocessed_employee_working_hours.csv', 'r') as f:
     reader = csv.reader(f)
 
-    # Read the header row and append the new column header
-    header_row = next(reader)
-    header_row.append('department')
+    # Skip the first row (column headers)
+    next(reader)
 
     # Create a list to store the modified rows
-    modified_rows = [header_row]
+    modified_rows = []
 
     # Loop through the remaining rows in the CSV file
     for row in reader:
