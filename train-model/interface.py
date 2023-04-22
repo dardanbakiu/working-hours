@@ -6,6 +6,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from knnFunction import predict_hours_of_work_knn
 from linearRegressionFunction import predict_hours_of_work_lr
 
+
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -24,7 +25,8 @@ class Application(tk.Frame):
         self.algorithm_label = tk.Label(self, text="Algorithm:")
         self.algorithm_label.grid(row=1, column=0)
         self.algorithm_var = tk.StringVar(value="Linear Regression")
-        self.algorithm_dropdown = ttk.Combobox(self, textvariable=self.algorithm_var, values=["Linear Regression", "KNN"])
+        self.algorithm_dropdown = ttk.Combobox(
+            self, textvariable=self.algorithm_var, values=["Linear Regression", "KNN"])
         self.algorithm_dropdown.grid(row=1, column=1)
 
         # Create the labels and entries for the algorithm parameters
@@ -33,3 +35,39 @@ class Application(tk.Frame):
         self.param1_entry = tk.Entry(self)
         self.param1_entry.grid(row=2, column=1)
 
+        self.param2_label = tk.Label(self, text="Parameter 2:")
+        self.param2_label.grid(row=3, column=0)
+        self.param2_entry = tk.Entry(self)
+        self.param2_entry.grid(row=3, column=1)
+
+        # Create the predict button
+        self.predict_button = tk.Button(
+            self, text="Predict", command=self.predict)
+        self.predict_button.grid(row=4, column=1)
+
+        # Create the result label
+        self.result_label = tk.Label(self, text="")
+        self.result_label.grid(row=5, column=0, columnspan=2)
+
+    def predict(self):
+        # Get the input values
+        employee_name = int(self.employee_entry.get())
+        algorithm = self.algorithm_var.get()
+        param1 = float(self.param1_entry.get())
+        param2 = float(self.param2_entry.get())
+
+        # Call the appropriate function based on the selected algorithm
+        if algorithm == "Linear Regression":
+            result = predict_hours_of_work_lr(employee_name, param1, param2)
+        else:
+            result = predict_hours_of_work_knn(
+                employee_name, param1, param2, n_neighbors=5, weights="uniform")
+
+        # Print the predicted number of hours worked
+        self.result_label.config(text=result)
+
+
+# Create the Tkinter GUI and start the main loop
+root = tk.Tk()
+app = Application(master=root)
+app.mainloop()
