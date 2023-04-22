@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.neighbors import KNeighborsRegressor
 
 # Read the dataset into a Pandas DataFrame
-df = pd.read_csv("your_dataset.csv")
+df = pd.read_csv("final_preprocessed_employee_working_hours.csv")
 
 # Extract the features (working_day and month) and the target (hours_of_work)
 X = df[["working_day", "month"]]
