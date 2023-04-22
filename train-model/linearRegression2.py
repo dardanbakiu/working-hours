@@ -14,3 +14,17 @@ model = LinearRegression()
 # Train the model on the entire dataset
 model.fit(X, y)
 
+# Get user input for the employee name, working day, and month
+employee_name = int(input("Enter employee name: "))
+working_day = int(input("Enter working day: "))
+month = int(input("Enter month: "))
+
+# Create a DataFrame with the user input
+user_input = pd.DataFrame({"working_day": [working_day], "month": [month]})
+
+# Use the model to make a prediction for the user input
+prediction = model.predict(user_input)
+
+# Print the predicted number of hours worked
+print(
+    f"Employee {employee_name} is predicted to work {prediction[0]:.2f} hours.")
