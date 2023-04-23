@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from knnFunction import predict_hours_of_work_knn
 from linearRegressionFunction import predict_hours_of_work_lr
-from supportVector import predict_hours_of_work_rfr
+from supportVectorFunction import predict_hours_of_work_rfr
 
 
 class Application(tk.Frame):
