@@ -3,8 +3,11 @@ from tkinter import ttk
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
 from knnFunction import predict_hours_of_work_knn
 from linearRegressionFunction import predict_hours_of_work_lr
+from supportVector import predict_hours_of_work_rfr
 
 
 class Application(tk.Frame):
@@ -25,8 +28,7 @@ class Application(tk.Frame):
         self.algorithm_label = tk.Label(self, text="Algorithm:")
         self.algorithm_label.grid(row=1, column=0)
         self.algorithm_var = tk.StringVar(value="Linear Regression")
-        self.algorithm_dropdown = ttk.Combobox(
-            self, textvariable=self.algorithm_var, values=["Linear Regression", "KNN"])
+        self.algorithm_dropdown = ttk.Combobox(self, textvariable=self.algorithm_var, values=["Linear Regression", "KNN", "Random Forest Regression"])
         self.algorithm_dropdown.grid(row=1, column=1)
 
         # Create the labels and entries for the algorithm parameters
@@ -41,8 +43,7 @@ class Application(tk.Frame):
         self.param2_entry.grid(row=3, column=1)
 
         # Create the predict button
-        self.predict_button = tk.Button(
-            self, text="Predict", command=self.predict)
+        self.predict_button = tk.Button(self, text="Predict", command=self.predict)
         self.predict_button.grid(row=4, column=1)
 
         # Create the result label
@@ -59,13 +60,13 @@ class Application(tk.Frame):
         # Call the appropriate function based on the selected algorithm
         if algorithm == "Linear Regression":
             result = predict_hours_of_work_lr(employee_name, param1, param2)
+        elif algorithm == "KNN":
+            result = predict_hours_of_work_knn(employee_name, param1, param2, n_neighbors=5, weights="uniform")
         else:
-            result = predict_hours_of_work_knn(
-                employee_name, param1, param2, n_neighbors=5, weights="uniform")
+            result = predict_hours_of_work_rfr(employee_name, param1, param2)
 
         # Print the predicted number of hours worked
         self.result_label.config(text=result)
-
 
 # Create the Tkinter GUI and start the main loop
 root = tk.Tk()
