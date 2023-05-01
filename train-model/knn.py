@@ -1,30 +1,53 @@
 import pandas as pd
-from sklearn.neighbors import KNeighborsRegressor
+import plotly.express as px
+import dash
+from dash import dcc
+from dash import html
 
-# Read the dataset into a Pandas DataFrame
-df = pd.read_csv("final_preprocessed_employee_working_hours.csv")
+# load the data
+df = pd.read_csv("../initial_dataset/employee_working_hours.csv")
 
-# Extract the features (working_day and month) and the target (hours_of_work)
-X = df[["working_day", "month"]]
-y = df["hours_of_work"]
+# create the dropdown options for employee names
+employee_options = [{'label': name, 'value': name}
+                    for name in df['employee_name'].unique()]
 
-# Create a KNN regression model
-model = KNeighborsRegressor()
+# create the Dash app
+app = dash.Dash(__name__)
 
-# Train the model on the entire dataset
-model.fit(X, y)
+# define the layout of the app
+app.layout = html.Div([
+    html.H1("Working Hours by Date"),
+    html.Label("Select Employee:"),
+    dcc.Dropdown(
+        id='employee-dropdown',
+        options=employee_options,
+        value=df['employee_name'].unique()[0]
+    ),
+    dcc.Graph(id='working-hours-graph')
+])
 
-# Get user input for the employee name, working day, and month
-employee_name = int(input("Enter employee name: "))
-working_day = int(input("Enter working day: "))
-month = int(input("Enter month: "))
+# define the callback function for the graph
 
-# Create a DataFrame with the user input
-user_input = pd.DataFrame({"working_day": [working_day], "month": [month]})
 
-# Use the model to make a prediction for the user input
-prediction = model.predict(user_input)
+@app.callback(
+    dash.dependencies.Output('working-hours-graph', 'figure'),
+    [dash.dependencies.Input('employee-dropdown', 'value')])
+def update_figure(selected_employee):
+    # filter the data by the selected employee
+    filtered_df = df[df['employee_name'] == selected_employee]
 
-# Print the predicted number of hours worked
-print(
-    f"Employee {employee_name} is predicted to work {prediction[0]:.2f} hours.")
+    # group the data by date and calculate the total working hours per date
+    groupby_date = filtered_df.groupby(
+        'date')['hours_of_work'].sum().reset_index()
+
+    # create the graph
+    fig = px.line(groupby_date, x='date', y='hours_of_work',
+                  title=f"Working Hours for {selected_employee}")
+    fig.update_xaxes(title_text='Date')
+    fig.update_yaxes(title_text='Working Hours')
+    return fig
+
+
+# run the app
+if __name__ == '__main__':
+    app.run_server(debug=True)
