@@ -8,8 +8,8 @@ def predict_hours_of_work_knn(employee_name, working_day, month, n_neighbors, we
     # Read the dataset into a Pandas DataFrame
     df = pd.read_csv("final_preprocessed_employee_working_hours.csv")
 
-    # Extract the features (working_day and month) and the target (hours_of_work)
-    X = df[["working_day", "month"]]
+    # Extract the features (employee_name, working_day and month) and the target (hours_of_work)
+    X = df[["employee_name", "working_day", "month"]]
     y = df["hours_of_work"]
 
     # Split the dataset into training and testing sets
@@ -29,7 +29,8 @@ def predict_hours_of_work_knn(employee_name, working_day, month, n_neighbors, we
     mse = mean_squared_error(y_test, y_pred)
 
     # Create a DataFrame with the user input
-    user_input = pd.DataFrame({"working_day": [working_day], "month": [month]})
+    user_input = pd.DataFrame({"employee_name": [employee_name], "working_day": [
+                              working_day], "month": [month]})
 
     # Use the model to make a prediction for the user input
     prediction = model.predict(user_input)

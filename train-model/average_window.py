@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -66,6 +67,11 @@ def on_model_selection(event):
     canvas.draw()
 
 
+def open_main_window():
+    root_pg1.destroy()  # Close the current window
+    os.system('python main_window.py')  # Open the main_window.py script
+
+
 root_pg1 = tk.Tk()
 root_pg1.title("Overall work hours average tab")
 
@@ -77,6 +83,10 @@ model_dropdown = ttk.Combobox(root_pg1, textvariable=model_var, values=[
 model_dropdown.bind("<<ComboboxSelected>>", on_model_selection)
 model_dropdown.grid(row=0, column=0, padx=10, pady=10)
 
+open_main_button = tk.Button(
+    root_pg1, text="Go Back", command=open_main_window)
+open_main_button.grid(row=1, column=0, padx=10, pady=10)
+
 # Create the table
 table = ttk.Treeview(root_pg1, columns=(
     "ID", "Day/Month", "Average Hour", "Accuracy"), show="headings")
@@ -84,13 +94,13 @@ table.heading("ID", text="Co-worker ID")
 table.heading("Day/Month", text="Day/Month")
 table.heading("Average Hour", text="Average Hour Calculated")
 table.heading("Accuracy", text="Accuracy")
-table.grid(row=1, column=0, padx=10, pady=10)
+table.grid(row=2, column=0, padx=10, pady=10)
 
 # Create the matplotlib graph
 fig = plt.Figure(figsize=(5, 4), dpi=100)
 ax = fig.add_subplot(111)
 canvas = FigureCanvasTkAgg(fig, master=root_pg1)
 canvas.draw()
-canvas.get_tk_widget().grid(row=2, column=0, padx=10, pady=10)
+canvas.get_tk_widget().grid(row=3, column=0, padx=10, pady=10)
 
 root_pg1.mainloop()

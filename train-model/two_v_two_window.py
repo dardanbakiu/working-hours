@@ -6,6 +6,7 @@ import re
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import subprocess
 
 
 def format_result(result):
@@ -33,8 +34,16 @@ class App(tk.Tk):
             self, text="Update values", command=self.update_values, state='disabled')
         self.update_button.grid(row=15, column=1, pady=20)
 
+        # Go back button
+        self.go_back_button = tk.Button(
+            self, text="Go Back", command=self.go_back)
+        self.go_back_button.grid(row=16, column=1, pady=20)
+
         # Center items in the grid
         self.center_items()
+
+        # Destroy on close the window
+        self.protocol('WM_DELETE_WINDOW', self.on_exit)
 
     def create_widgets(self):
         headers = ["First employee ID:", "Second employee ID:"]
@@ -140,6 +149,16 @@ class App(tk.Tk):
         self.output_fields[2][1].insert(0, formatted_result)
         self.output_fields[2][1].config(state='readonly')
         pass
+
+    def go_back(self):
+        self.withdraw()
+        subprocess.run(['python', 'main_window.py'])  # Open the MainWindow
+        self.on_exit()  # Close the current window
+
+    def on_exit(self):
+        """When you click to exit, this function is called"""
+        self.destroy()  # Close the window
+        exit()  # Stop the Python script
 
     def plot_graph(self, employee1, employee2):
         # Read the dataset

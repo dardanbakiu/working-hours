@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from knnFunction import predict_hours_of_work_knn
 from linearRegressionFunction import predict_hours_of_work_lr
 from supportVectorFunction import predict_hours_of_work_rfr
+import subprocess
 
 
 class Application(tk.Frame):
@@ -49,6 +50,11 @@ class Application(tk.Frame):
             self, text="Predict", command=self.predict)
         self.predict_button.grid(row=4, column=1, padx=5, pady=5)
 
+        # Create the go-back button
+        self.goback_button = tk.Button(
+            self, text="Go back", command=self.goback)
+        self.goback_button.grid(row=5, column=1, padx=5, pady=5)
+
         # Create the result label
         self.result_label = tk.Label(self, text="")
         self.result_label.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
@@ -71,6 +77,10 @@ class Application(tk.Frame):
 
         # Print the predicted number of hours worked
         self.result_label.config(text=result)
+
+    def goback(self):
+        root.destroy()
+        subprocess.run(['python', 'main_window.py'])
 
 
 # Create the Tkinter GUI and start the main loop
