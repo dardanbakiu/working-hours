@@ -25,3 +25,5 @@ Për të ekzekutuar këtë projekt, do t'ju duhet të instaloni paketat e mëpos
 
 User interface qe paraqet 3 mundesite e aplikacionit per predikimin e oreve te punes 
 <img src="./results/01.png">
+
+![Alt Text](./results/01.png)
