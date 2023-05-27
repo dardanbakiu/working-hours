@@ -9,13 +9,13 @@ def show_windows():
         selected_option = radio_var.get()
         if selected_option == 1:
             root.destroy()
-            subprocess.run(['python', 'average_window.py'])
+            subprocess.run(['python3', 'average_window.py'])
         elif selected_option == 2:
             root.destroy()
-            subprocess.run(['python', 'manual_search_window.py'])
+            subprocess.run(['python3', 'manual_search_window.py'])
         elif selected_option == 3:
             root.destroy()
-            subprocess.run(['python', 'two_v_two_window.py'])
+            subprocess.run(['python3', 'two_v_two_window.py'])
         else:
             messagebox.showerror("Error", "Please select an option")
 
