@@ -30,3 +30,8 @@ Për të ekzekutuar këtë projekt, do t'ju duhet të instaloni paketat e mëpos
 <img src="/results/02.png">
 <img src="/results/03.png">
 <img src="/results/04.png">
+
+- Predikimi i oreve te punes per nje puntor specifik ne nje muaj te caktuar ne nje dite te cakutar permes nje algoritmi te caktuar
+
+<img src="/results/05.png">
+<img src="/results/06.png">
