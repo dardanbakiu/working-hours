@@ -23,7 +23,10 @@ Për të ekzekutuar këtë projekt, do t'ju duhet të instaloni paketat e mëpos
 
 ## Rezultatet
 
-User interface qe paraqet 3 mundesite e aplikacionit per predikimin e oreve te punes 
+- User interface qe paraqet 3 mundesite e aplikacionit per predikimin e oreve te punes 
 <img src="/results/01.png">
 
-![Alt Text](./results/01.png)
+- Paraqitja grafike e oreve te punes per muaj per te gjithe puntoret dhe predikimi percdo dite per secilin punetor permes 3 algoritmeve
+<img src="/results/02.png">
+<img src="/results/03.png">
+<img src="/results/04.png">
